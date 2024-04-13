@@ -3,3 +3,12 @@
 ################################################################################
 
 /.vs
+/Asp.Net.MVC/.vs/Asp.Net.MVC
+/Asp.Net.MVC/Asp.Net.MVC/bin
+/Asp.Net.MVC/Asp.Net.MVC/obj/Debug
+/Asp.Net.MVC/Asp.Net.MVC
+/Asp.Net.MVC
+/SlefHosterWEBAPI/.vs/SlefHosterWEBAPI/v16
+/SlefHosterWEBAPI/packages
+/SlefHosterWEBAPI/SlefHosterWEBAPI/bin/Debug
+/SlefHosterWEBAPI/SlefHosterWEBAPI/obj/Debug
