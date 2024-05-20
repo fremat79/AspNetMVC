@@ -1,0 +1,53 @@
+@using DevExtremeMvcApp1.Models;
+
+@model VMPeso
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Home</h2>
+
+
+@using (Html.BeginForm("Detail", "CaricoFascio", FormMethod.Post, new { id = "editMacchina" }))
+{
+
+    @(Html.DevExtreme().Form<VMPeso>().ID("Macchina").ValidationGroup("formMacchina")
+                                            ¼                                .LabelLocation(FormLabelLocation.Left)
+                                                                            .ShowOptionalMark(false)
+                                                                            .ShowRequiredMark(false)
+                                                                            .ShowColonAfterLabel(false)
+                                                                            .ShowValidationSummary(false)
+                                                                            .FormData(Model).Items(itm =>
+                                                                            {
+                                                                                itm.AddGroup().Name("Dati").Items(formItems =>
+                                                                                {
+                                                                                    formItems.AddSimpleFor(m => m.Peso)
+                                                                                    .Editor(e => e.NumberBox()
+                                                                                                .Format("#,##0.###")
+                                                                                                .StylingMode(EditorStylingMode.Filled)
+                                                                                                .ID("Peso")                                                                                                
+                                                                                                .ReadOnly(false));
+                                                                                });
+
+                                                                            }))
+    @(Html.DevExtreme().Button().Icon("todo")
+                    .ValidationGroup("formMacchina").Type(ButtonType.Success)
+                    .OnClick("onLoadButtonClick")
+                    .UseSubmitBehavior(false))
+}
+
+<script>
+    DevExpress.localization.locale('it-IT');
+
+    function onLoadButtonClick(e) {
+        if (e.validationGroup.validate().isValid) {
+            var acconsenti = DevExpress.ui.dialog.confirm("<i>Conferma ?</i>", "Conferma");
+            acconsenti.done(function (dialogResult) {
+                if (dialogResult == true) {                    
+                    $("#editMacchina").attr("action", '@Url.Action("Load")');
+                    $("#editMacchina").submit();
+                }
+            });
+        }
+    }
+</script>
