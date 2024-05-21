@@ -28,6 +28,13 @@ namespace DevExtremeMvcApp1 {
             styleBundle
                 .Include("~/Content/Site.css");
 
+
+            // jquery validation
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            "~/Scripts/jquery.validate*",
+            "~/Scripts/jquery.validate.unobtrusive*"));
+
+
             bundles.Add(scriptBundle);
             bundles.Add(styleBundle);
 

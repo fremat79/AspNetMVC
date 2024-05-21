@@ -5,6 +5,13 @@
     ViewBag.Title = "Index";
 }
 
+
+
+
+@Scripts.Render("~/bundles/jqueryval")
+
+
+
 <h2>Home</h2>
 
 
@@ -23,9 +30,9 @@
                                                                                 {
                                                                                     formItems.AddSimpleFor(m => m.Peso)
                                                                                     .Editor(e => e.NumberBox()
-                                                                                                .Format("#,##0.###")
+                                                                                                .Format("#,##0.###")                                                                                                
                                                                                                 .StylingMode(EditorStylingMode.Filled)
-                                                                                                .ID("Peso")                                                                                                
+                                                                                                .ID("Peso")
                                                                                                 .ReadOnly(false));
                                                                                 });
 
@@ -39,11 +46,34 @@
 <script>
     DevExpress.localization.locale('it-IT');
 
+    // https://github.com/wet-boew/wet-boew/issues/7666
+    //uncomment to get error durign validation of numer that contain ,this avoid form to be submitted
+
+    //$("#editMacchina").validate({
+    //    rules: {
+    //        field: {
+    //            required: true,
+    //            step: 10
+    //        }
+    //    }
+    //});
+
+
+    $.validator.methods.range = function (value, element, param) {
+        var globalizedValue = value.replace(",", ".");
+        return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+    }
+
+    $.validator.methods.number = function (value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+
+
     function onLoadButtonClick(e) {
         if (e.validationGroup.validate().isValid) {
             var acconsenti = DevExpress.ui.dialog.confirm("<i>Conferma ?</i>", "Conferma");
             acconsenti.done(function (dialogResult) {
-                if (dialogResult == true) {                    
+                if (dialogResult == true) {
                     $("#editMacchina").attr("action", '@Url.Action("Load")');
                     $("#editMacchina").submit();
                 }
